@@ -2,9 +2,9 @@
   "name": "connect-four",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base build --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,10 @@
   "homepage": "https://github.com/carlosxl/connect-four#readme",
   "devDependencies": {},
   "dependencies": {
+    "babel-core": "^6.16.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
   }
 }
