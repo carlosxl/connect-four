@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/carlosxl/connect-four/issues"
   },
-  "homepage": "https://github.com/carlosxl/connect-four#readme"
+  "homepage": "https://github.com/carlosxl/connect-four#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "webpack": "^1.13.2"
+  }
 }
