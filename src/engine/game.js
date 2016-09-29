@@ -1,56 +1,41 @@
-var _ = require('lodash');
+import _ from 'lodash';
+import Board from './board';
 
 class Game {
   constructor() {
-    // [Array(6) x 7], bottom left corner is board[0][0], upper left is board[0][5]
-    this.board = _.chunk(Array(6 * 7), 6);
+    this._board = new Board({ maxColN: 7, maxRowN: 6 });
 
-    this.last_move = null;
-    this.next_disc = Game.DISC1;
-    this.total_moves = 0;
+    this.nextMoveDisc = Board.DISC1;
   }
 
-  switch_player() {
-    this.next_disc = this.next_disc ^ 1;
+  switchPlayer() {
+    this.nextMoveDisc = this.nextMoveDisc ^ 1;
   }
 
   move(colN) {
-    if (this.is_end_game()) {
+    if (this.isEndGame()) {
       this.draw();
-      return
+      return false;
     }
 
-    var col = this.board[colN];
-    col[_.indexOf(col, undefined)] = this.next_disc;
-    this.switch_player();
-    this.draw();
+    const col = this._board.getColumn(colN);
+    const nextRowN = _.indexOf(col, undefined);
+
+    if (nextRowN === -1) {
+      return false;
+    }
+
+    this._board.placeDisc(colN, nextRowN, this.nextMoveDisc);
+    this.switchPlayer();
   }
 
-  is_end_game() {
+  isEndGame() {
     return false;
   }
 
-  draw() {
-    var self = this;
-    console.log('  ______________')
-    _.forEach(_.range(5, -1, -1), function(rowN) {
-      var row = rowN + ': |';
-      _.forEach(_.range(6), function(colN) {
-        var _map = {
-          undefined: ' ',
-          1: 'X',
-          0: 'O',
-        }
-        row += (_map[self.board[colN][rowN]]) + '|';
-      });
-      console.log(row);
-    });
-    console.log('  ______________')
+  logInfo() {
+    return this._board.asciiDraw();
   }
 }
 
-// Static data properties
-Game.DISC1 = 0;
-Game.DISC2 = 1;
-
-module.exports = Game;
+export default Game;
