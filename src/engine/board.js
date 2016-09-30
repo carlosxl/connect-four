@@ -14,6 +14,10 @@ class Board {
     return this._board[colN];
   }
 
+  getCellDisc(colN, rowN) {
+    return this._board[colN][rowN];
+  }
+
   asciiDraw() {
     var self = this;
     _.forEach(_.range(5, -1, -1), function(rowN) {
