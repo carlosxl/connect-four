@@ -23,17 +23,21 @@ class Board {
           undefined: ' ',
           [Board.DISC1]: 'O',
           [Board.DISC2]: 'X',
-        }
+        };
         row += (_map[self._board[colN][rowN]]) + '|';
       });
       console.log(row);
     });
-    console.log('   ---------------')
+    console.log('   ---------------');
   }
 }
 
 // Static data properties
 Board.DISC1 = 0;
 Board.DISC2 = 1;
+
+Board.getOpponentDisc = function(disc) {
+  return disc ^ 1;
+};
 
 export default Board;

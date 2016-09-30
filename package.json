@@ -16,7 +16,10 @@
     "url": "https://github.com/carlosxl/connect-four/issues"
   },
   "homepage": "https://github.com/carlosxl/connect-four#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.6.1",
+    "eslint-plugin-react": "^6.3.0"
+  },
   "dependencies": {
     "babel-core": "^6.16.0",
     "babel-loader": "^6.2.5",

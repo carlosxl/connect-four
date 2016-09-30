@@ -2,14 +2,14 @@ import _ from 'lodash';
 import Board from './board';
 
 class Game {
-  constructor() {
+  constructor () {
     this._board = new Board({ maxColN: 7, maxRowN: 6 });
 
     this.nextMoveDisc = Board.DISC1;
   }
 
   switchPlayer() {
-    this.nextMoveDisc = this.nextMoveDisc ^ 1;
+    this.nextMoveDisc = Board.getOpponentDisc(this.nextMoveDisc);
   }
 
   move(colN) {
@@ -30,7 +30,7 @@ class Game {
   }
 
   isEndGame() {
-    return false;
+
   }
 
   logInfo() {
