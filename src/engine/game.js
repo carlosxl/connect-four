@@ -2,13 +2,14 @@ import _ from 'lodash';
 import Board from './board';
 
 class Game {
-  constructor (maxColN=7, maxRowN=6, winCondition=4) {
+  constructor (numCol=7, numRow=6, winCondition=4) {
 
-    this._board = new Board({ maxColN, maxRowN });
+    this._board = new Board({ numCol, numRow });
     this._winCondition = winCondition;
 
     this.nextMoveDisc = Board.DISC1;
     this.totalMoves = 0;
+    this.winner;
   }
 
   switchPlayer() {
@@ -17,7 +18,6 @@ class Game {
 
   move(colN) {
     if (this.isEndGame()) {
-      this.draw();
       return false;
     }
 
@@ -31,36 +31,87 @@ class Game {
     this._board.placeDisc(colN, nextRowN, this.nextMoveDisc);
     this.totalMoves++;
     this.switchPlayer();
+    return true;
   }
 
   isEndGame() {
-    _.forEach(_.range(7), function(colN) {
-      _.forEach(_.range(6), function(rowN) {
+    let colN, rowN;
+
+    if (!_.isUndefined(this.winner)) {
+      return true;
+    }
+
+    for (colN = 0; colN < this._board.numCol; colN++) {
+      for (rowN = 0; rowN < this._board.numRow; rowN++) {
+        if (this._board.isEmptyCell(colN, rowN)) {
+          break;
+        }
+
         const thisDisc = this._board.getCellDisc(colN, rowN);
-        let connected = 1;
+        let traverseIter;
 
         // check upward
-        while (true) {
-          const nextDisc = this._board.lineTraverse(colN, rowN, 0, 1);
-
-          if (_.isUndefined(nextDisc)) {
-            break;
-          }
-
-          if (nextDisc === thisDisc) {
-            connected++;
-            if (connected === this.winCondition) {
-              return thisDisc;
-            }
-          }
+        traverseIter = this._board.lineTraverse(colN, rowN, 0, 1);
+        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+          this.winner = thisDisc;
+          return true;
         }
-      });
-    });
+
+        // check up right and onward
+        traverseIter = this._board.lineTraverse(colN, rowN, 1, 1);
+        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+          this.winner = thisDisc;
+          return true;
+        }
+
+        // check right and onward
+        traverseIter = this._board.lineTraverse(colN, rowN, 1, 0);
+        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+          this.winner = thisDisc;
+          return true;
+        }
+
+        // check down right and onward
+        traverseIter = this._board.lineTraverse(colN, rowN, 1, -1);
+        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+          this.winner = thisDisc;
+          return true;
+        }
+      }
+    }
+
+    return false;
+
+    function traverseUntilWinCondition(thisDisc, iter) {
+      let numConnected = 1;
+
+      while (true) {
+        let { value: nextDisc, done } = iter.next();
+
+        if (done) {
+          return false;
+        }
+
+        if (this._board.isEmpty(nextDisc)) {
+          break;
+        }
+
+        if (nextDisc === thisDisc) {
+          numConnected++;
+          if (numConnected === this._winCondition) {
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }
+    }
   }
 
   logInfo() {
     this._board.asciiDraw();
-    console.log(`Total moves ${this.totalMoves}.`);
+    console.log(`Total moves ${ this.totalMoves }.`);
+    console.log(`The winner is ${ this.winner }.`);
   }
 }
 
