@@ -57,21 +57,21 @@ class Game {
           return true;
         }
 
-        // check up right and onward
+        // check up right diagonal
         traverseIter = this._board.lineTraverse(colN, rowN, 1, 1);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
         }
 
-        // check right and onward
+        // check right
         traverseIter = this._board.lineTraverse(colN, rowN, 1, 0);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
         }
 
-        // check down right and onward
+        // check down right diagonal
         traverseIter = this._board.lineTraverse(colN, rowN, 1, -1);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
