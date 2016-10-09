@@ -1,8 +1,12 @@
+var debug = process.env.NODE_ENV !== 'production';
+var webpack = require('webpack');
+
 module.exports = {
-  entry: "./src/app/entry.js",
+  context: __dirname + '/src',
+  entry: "./app/entry.js",
   output: {
       path: __dirname + '/build',
-      filename: "app.js"
+      filename: "app.min.js"
   },
   module: {
     loaders: [
@@ -16,5 +20,15 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: debug ? [] : [
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false })
+  ]
 };

@@ -15,13 +15,19 @@ export default class App extends React.Component {
   }
 
   render() {
+    const boardStyle = {
+      'width': `${this.getBoardWidth()}px`
+    };
+
     return (
       <div>
-        <Stage width={this.getBoardWidth()} height={this.getBoardHeight()}>
-          <Layer>
-            <Board numCol={this.props.numCol} numRow={this.props.numRow} />
-          </Layer>
-        </Stage>
+        <div class="center-block" style={boardStyle}>
+          <Stage width={this.getBoardWidth()} height={this.getBoardHeight()}>
+            <Layer>
+              <Board numCol={this.props.numCol} numRow={this.props.numRow} />
+            </Layer>
+          </Stage>
+        </div>
         <GamePanel />
       </div>
     );
