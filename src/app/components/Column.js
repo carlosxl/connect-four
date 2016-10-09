@@ -101,7 +101,8 @@ export default class Column extends React.Component {
       <Group
         onMouseover={this.handleMouseover}
         onMouseout={this.handleMouseout}
-        onClick={this.makeMove}>
+        onClick={this.makeMove}
+        onTap={this.makeMove}>
         <Rect
           x={this.getX()}
           y={this.getY()}
