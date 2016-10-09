@@ -6,8 +6,17 @@ import Column from './Column';
 
 export default class Board extends React.Component {
   render() {
-    const columns = _.range(this.props.numColumn).map((i) => {
-      return <Column key={i} column={i} numRow={this.props.numRow} />;
+    let game = this.props.game;
+
+    const columns = _.range(this.props.numCol).map((colN) => {
+      return (
+        <Column
+          key={colN}
+          colN={colN}
+          numRow={this.props.numRow}
+          data={game.board.getColumn(colN)}
+        />
+      );
     });
 
     return (

@@ -4,9 +4,9 @@ import React from 'react';
 import * as config from '../config';
 import Board from './Board';
 
-export default class Layout extends React.Component {
+export default class App extends React.Component {
   getBoardWidth() {
-    return this.props.numColumn * config.cellSideLength;
+    return this.props.numCol * config.cellSideLength;
   }
 
   getBoardHeight() {
@@ -17,7 +17,7 @@ export default class Layout extends React.Component {
     return (
       <Stage width={this.getBoardWidth()} height={this.getBoardHeight()}>
         <Layer>
-          <Board numColumn={this.props.numColumn} numRow={this.props.numRow} />
+          <Board numCol={this.props.numCol} numRow={this.props.numRow} game={this.props.game} />
         </Layer>
       </Stage>
     );

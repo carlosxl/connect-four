@@ -3,24 +3,28 @@ import { Circle, Group, Rect } from 'react-konva';
 import React from 'react';
 
 import * as config from '../config';
+import EngineBoard from '../../engine/board';
 
 export default class Column extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    const bindAll = [
+    const handlerNames = [
       'handleMouseout', 'handleMouseover',
     ];
 
-    bindAll.map((name) => {
+    handlerNames.forEach((name) => {
       this[name] = this[name].bind(this);
     });
 
-    this.state = {mouseover: false};
+    this.state = {
+      data: props.data,
+      mouseover: false
+    };
   }
 
   getX() {
-    return this.props.column * config.cellSideLength;
+    return this.props.colN * config.cellSideLength;
   }
 
   getY() {
@@ -44,14 +48,31 @@ export default class Column extends React.Component {
   }
 
   render() {
-    const cells = _.range(this.props.numRow).map((i) => {
+    const numRow = this.props.numRow;
+    const cells = _.range(numRow).map((rowN) => {
+      let discColor;
+
+      switch (this.state.data[rowN]) {
+      case EngineBoard.DISC1:
+        discColor = 'red';
+        break;
+
+      case EngineBoard.DISC2:
+        discColor = 'green';
+        break;
+
+      default:
+        discColor = config.discDefaultColor;
+        break;
+      }
+
       return (
         <Circle
-          key={i}
+          key={rowN}
           x={this.getX() + config.cellSideLength / 2}
-          y={i * config.cellSideLength + config.cellSideLength / 2}
+          y={(numRow - rowN - 1) * config.cellSideLength + config.cellSideLength / 2}
           radius={config.discRadius}
-          fill={config.boardCellBackgroundColor}
+          fill={discColor}
         />
       );
     });

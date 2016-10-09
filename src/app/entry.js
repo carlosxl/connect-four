@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Game from '../engine/game';
-import Layout from './components/Layout';
+import App from './components/App';
 
 // let game = new Game();
 //
@@ -14,5 +14,11 @@ import Layout from './components/Layout';
 // });
 // game.logInfo();
 
-const app = document.getElementById('app');
-ReactDOM.render(<Layout numColumn={7} numRow={6} />, app);
+const mountElement = document.getElementById('app');
+let game = new Game();
+ReactDOM.render(<App numCol={7} numRow={6} game={game} />, mountElement);
+
+
+setTimeout(() => {
+  game.move(1);
+}, 10);

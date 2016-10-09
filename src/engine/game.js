@@ -3,13 +3,12 @@ import Board from './board';
 
 class Game {
   constructor (numCol=7, numRow=6, winCondition=4) {
-
-    this._board = new Board({ numCol, numRow });
-    this._winCondition = winCondition;
-
+    this.board = new Board({ numCol, numRow });
     this.nextMoveDisc = Board.DISC1;
     this.totalMoves = 0;
     this.winner;
+
+    this._winCondition = winCondition;
   }
 
   switchPlayer() {
@@ -21,14 +20,14 @@ class Game {
       return false;
     }
 
-    const col = this._board.getColumn(colN);
+    const col = this.board.getColumn(colN);
     const nextRowN = _.indexOf(col, undefined);
 
     if (nextRowN === -1) {
       return false;
     }
 
-    this._board.placeDisc(colN, nextRowN, this.nextMoveDisc);
+    this.board.placeDisc(colN, nextRowN, this.nextMoveDisc);
     this.totalMoves++;
     this.switchPlayer();
     return true;
@@ -41,38 +40,38 @@ class Game {
       return true;
     }
 
-    for (colN = 0; colN < this._board.numCol; colN++) {
-      for (rowN = 0; rowN < this._board.numRow; rowN++) {
-        if (this._board.isEmptyCell(colN, rowN)) {
+    for (colN = 0; colN < this.board.numCol; colN++) {
+      for (rowN = 0; rowN < this.board.numRow; rowN++) {
+        if (this.board.isEmptyCell(colN, rowN)) {
           break;
         }
 
-        const thisDisc = this._board.getCellDisc(colN, rowN);
+        const thisDisc = this.board.getCellDisc(colN, rowN);
         let traverseIter;
 
         // check upward
-        traverseIter = this._board.lineTraverse(colN, rowN, 0, 1);
+        traverseIter = this.board.lineTraverse(colN, rowN, 0, 1);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
         }
 
         // check up right diagonal
-        traverseIter = this._board.lineTraverse(colN, rowN, 1, 1);
+        traverseIter = this.board.lineTraverse(colN, rowN, 1, 1);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
         }
 
         // check right
-        traverseIter = this._board.lineTraverse(colN, rowN, 1, 0);
+        traverseIter = this.board.lineTraverse(colN, rowN, 1, 0);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
         }
 
         // check down right diagonal
-        traverseIter = this._board.lineTraverse(colN, rowN, 1, -1);
+        traverseIter = this.board.lineTraverse(colN, rowN, 1, -1);
         if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
           this.winner = thisDisc;
           return true;
@@ -92,7 +91,7 @@ class Game {
           return false;
         }
 
-        if (this._board.isEmpty(nextDisc)) {
+        if (this.board.isEmpty(nextDisc)) {
           break;
         }
 
@@ -109,7 +108,7 @@ class Game {
   }
 
   logInfo() {
-    this._board.asciiDraw();
+    this.board.asciiDraw();
     console.log(`Total moves ${ this.totalMoves }.`);
     console.log(`The winner is ${ this.winner }.`);
   }

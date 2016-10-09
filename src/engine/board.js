@@ -2,6 +2,16 @@ import _ from 'lodash';
 import 'babel-polyfill';
 
 class Board {
+  static DISC1 = 0;
+  static DISC2 = 1;
+
+  static getOpponentDisc(disc) {
+    if (disc === Board.DISC1) {
+      return Board.DISC2;
+    }
+    return Board.DISC1;
+  }
+
   constructor({ numCol, numRow }) {
     this.numCol = numCol;
     this.numRow = numRow;
@@ -61,13 +71,5 @@ class Board {
     console.log('   ---------------');
   }
 }
-
-// Static data properties
-Board.DISC1 = 0;
-Board.DISC2 = 1;
-
-Board.getOpponentDisc = function(disc) {
-  return disc ^ 1;
-};
 
 export default Board;
