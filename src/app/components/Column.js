@@ -12,7 +12,7 @@ export default class Column extends React.Component {
     super(props);
 
     const handlerNames = [
-      'handleMouseout', 'handleMouseover', 'makeMove'
+      'handleMouseout', 'handleMouseover', 'handleMove'
     ];
 
     handlerNames.forEach((name) => {
@@ -39,19 +39,19 @@ export default class Column extends React.Component {
     });
   }
 
-  getX() {
+  getColCanvasX() {
     return this.props.colN * config.cellSideLength;
   }
 
-  getY() {
+  getColCanvasY() {
     return 0;
   }
 
-  getWidth() {
+  getColWidth() {
     return config.cellSideLength;
   }
 
-  getHeight() {
+  getColHeight() {
     return this.props.numRow * config.cellSideLength;
   }
 
@@ -63,7 +63,7 @@ export default class Column extends React.Component {
     this.setState({mouseover: false});
   }
 
-  makeMove() {
+  handleMove() {
     GameActions.move(this.props.colN);
   }
 
@@ -89,7 +89,7 @@ export default class Column extends React.Component {
       return (
         <Circle
           key={rowN}
-          x={this.getX() + config.cellSideLength / 2}
+          x={this.getColCanvasX() + config.cellSideLength / 2}
           y={(numRow - rowN - 1) * config.cellSideLength + config.cellSideLength / 2}
           radius={config.discRadius}
           fill={discColor}
@@ -101,13 +101,13 @@ export default class Column extends React.Component {
       <Group
         onMouseover={this.handleMouseover}
         onMouseout={this.handleMouseout}
-        onClick={this.makeMove}
-        onTap={this.makeMove}>
+        onClick={this.handleMove}
+        onTap={this.handleMove}>
         <Rect
-          x={this.getX()}
-          y={this.getY()}
-          width={this.getWidth()}
-          height={this.getHeight()}
+          x={this.getColCanvasX()}
+          y={this.getColCanvasY()}
+          width={this.getColWidth()}
+          height={this.getColHeight()}
           fill={this.state.mouseover ? config.boardBackgroundColorMouseOver
                                      : config.boardBackgroundColor}
         />

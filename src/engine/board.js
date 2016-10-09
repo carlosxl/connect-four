@@ -54,22 +54,23 @@ class Board {
     }
   }
 
-  asciiDraw() {
-    var self = this;
-    _.forEach(_.range(5, -1, -1), function(rowN) {
-      var row = rowN + ': |';
-      _.forEach(_.range(7), function(colN) {
-        var _map = {
-          undefined: ' ',
-          [Board.DISC1]: 'O',
-          [Board.DISC2]: 'X',
-        };
-        row += (_map[self._board[colN][rowN]]) + '|';
-      });
-      console.log(row);
-    });
-    console.log('   ---------------');
-  }
+  // For debug
+  // asciiDraw() {
+  //   var self = this;
+  //   _.forEach(_.range(5, -1, -1), function(rowN) {
+  //     var row = rowN + ': |';
+  //     _.forEach(_.range(7), function(colN) {
+  //       var _map = {
+  //         undefined: ' ',
+  //         [Board.DISC1]: 'O',
+  //         [Board.DISC2]: 'X',
+  //       };
+  //       row += (_map[self._board[colN][rowN]]) + '|';
+  //     });
+  //     console.log(row);
+  //   });
+  //   console.log('   ---------------');
+  // }
 }
 
 export default Board;

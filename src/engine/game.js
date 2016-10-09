@@ -2,6 +2,9 @@ import _ from 'lodash';
 import Board from './board';
 
 class Game {
+  static PLAYER1_NAME = 'player 1';
+  static PLAYER2_NAME = 'player 2';
+
   constructor (numCol=7, numRow=6, winCondition=4) {
     this.board = new Board({ numCol, numRow });
     this.nextMoveDisc = Board.DISC1;
@@ -12,13 +15,11 @@ class Game {
   }
 
   discToPlayerName(disc) {
-    // TODO: Return nicer names.
-
     if (disc === Board.DISC1) {
-      return 'player 1';
+      return Game.PLAYER1_NAME;
     }
 
-    return 'player 2';
+    return Game.PLAYER2_NAME;
   }
 
   switchPlayer() {

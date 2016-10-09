@@ -31,7 +31,9 @@ export default class GamePanel extends React.Component {
     });
   }
 
-  restart() {
+  // TODO: Add deconstructors.
+
+  handleRestart() {
     GameActions.restart();
   }
 
@@ -48,7 +50,10 @@ export default class GamePanel extends React.Component {
       <div>
         <p class="text-center">{infoMsg}</p>
         <p>
-          <button class="btn btn-default center-block" onClick={this.restart.bind(this)}>Restart</button>
+          <button class="btn btn-default center-block"
+            onClick={this.handleRestart.bind(this)}>
+            Restart
+          </button>
         </p>
       </div>
     );
