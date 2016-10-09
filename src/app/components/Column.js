@@ -4,13 +4,15 @@ import React from 'react';
 
 import * as config from '../config';
 import EngineBoard from '../../engine/board';
+import gameStore from '../stores/gameStore';
+import * as GameActions from '../actions/GameActions';
 
 export default class Column extends React.Component {
   constructor(props) {
     super(props);
 
     const handlerNames = [
-      'handleMouseout', 'handleMouseover',
+      'handleMouseout', 'handleMouseover', 'makeMove'
     ];
 
     handlerNames.forEach((name) => {
@@ -18,9 +20,23 @@ export default class Column extends React.Component {
     });
 
     this.state = {
-      data: props.data,
+      data: gameStore.getColumn(props.colN),
       mouseover: false
     };
+  }
+
+  componentWillMount() {
+    gameStore.on('move', () => {
+      this.setState({
+        data: gameStore.getColumn(this.props.colN),
+      });
+    });
+
+    gameStore.on('restart', () => {
+      this.setState({
+        data: gameStore.getColumn(this.props.colN),
+      });
+    });
   }
 
   getX() {
@@ -47,23 +63,27 @@ export default class Column extends React.Component {
     this.setState({mouseover: false});
   }
 
+  makeMove() {
+    GameActions.move(this.props.colN);
+  }
+
   render() {
     const numRow = this.props.numRow;
     const cells = _.range(numRow).map((rowN) => {
       let discColor;
 
       switch (this.state.data[rowN]) {
-      case EngineBoard.DISC1:
-        discColor = 'red';
-        break;
+        case EngineBoard.DISC1:
+          discColor = 'red';
+          break;
 
-      case EngineBoard.DISC2:
-        discColor = 'green';
-        break;
+        case EngineBoard.DISC2:
+          discColor = 'green';
+          break;
 
-      default:
-        discColor = config.discDefaultColor;
-        break;
+        default:
+          discColor = config.discDefaultColor;
+          break;
       }
 
       return (
@@ -78,7 +98,10 @@ export default class Column extends React.Component {
     });
 
     return (
-      <Group onMouseover={this.handleMouseover} onMouseout={this.handleMouseout}>
+      <Group
+        onMouseover={this.handleMouseover}
+        onMouseout={this.handleMouseout}
+        onClick={this.makeMove}>
         <Rect
           x={this.getX()}
           y={this.getY()}

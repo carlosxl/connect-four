@@ -11,6 +11,16 @@ class Game {
     this._winCondition = winCondition;
   }
 
+  discToPlayerName(disc) {
+    // TODO: Return nicer names.
+
+    if (disc === Board.DISC1) {
+      return 'player 1';
+    }
+
+    return 'player 2';
+  }
+
   switchPlayer() {
     this.nextMoveDisc = Board.getOpponentDisc(this.nextMoveDisc);
   }
@@ -105,12 +115,6 @@ class Game {
         }
       }
     }
-  }
-
-  logInfo() {
-    this.board.asciiDraw();
-    console.log(`Total moves ${ this.totalMoves }.`);
-    console.log(`The winner is ${ this.winner }.`);
   }
 }
 

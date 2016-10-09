@@ -3,6 +3,7 @@ import React from 'react';
 
 import * as config from '../config';
 import Board from './Board';
+import GamePanel from './GamePanel';
 
 export default class App extends React.Component {
   getBoardWidth() {
@@ -15,11 +16,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Stage width={this.getBoardWidth()} height={this.getBoardHeight()}>
-        <Layer>
-          <Board numCol={this.props.numCol} numRow={this.props.numRow} game={this.props.game} />
-        </Layer>
-      </Stage>
+      <div>
+        <Stage width={this.getBoardWidth()} height={this.getBoardHeight()}>
+          <Layer>
+            <Board numCol={this.props.numCol} numRow={this.props.numRow} />
+          </Layer>
+        </Stage>
+        <GamePanel />
+      </div>
     );
   }
 }
