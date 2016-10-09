@@ -6,6 +6,7 @@ module.exports = {
     "node": true
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
@@ -36,6 +37,8 @@ module.exports = {
     "no-constant-condition": [
       "error",
       { "checkLoops": false }
-    ]
+    ],
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error",
   }
 };
