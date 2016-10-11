@@ -33,7 +33,12 @@ $ npm run dev
 ```
 which will fire up a --hot --inline webpack-dev-server on your `localhost:8080`.
 
-## References:
+## TODO
+1. Keep a game history so to support advanced actions like "undo" or "replay".
+2. "gameStore" should be tied to `<Board/>` component.
+3. Prettier UI.
+
+## References
 [react-konva](https://github.com/lavrton/react-konva): a JavaScript library for drawing complex canvas graphics using React.
 
 This project also heavily uses ES2015 (or actually ES2015+) features with babel compiler. I found babel's [introductory page](https://babeljs.io/docs/learn-es2015/) a great place to get started to learn the cool features from ES2015.
