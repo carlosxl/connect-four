@@ -10,8 +10,8 @@ class GameStore extends EventEmitter {
     this.game = new Game();
   }
 
-  getColumn(colN) {
-    return this.game.board.getColumn(colN);
+  getBoard() {
+    return this.game.board;
   }
 
   getWinnerName() {
