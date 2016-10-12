@@ -35,8 +35,7 @@ which will fire up a --hot --inline webpack-dev-server on your `localhost:8080`.
 
 ## TODO
 1. Keep a game history so to support advanced actions like "undo" or "replay".
-2. "gameStore" should be tied to `<Board/>` component.
-3. Prettier UI.
+2. Prettier UI.
 
 ## References
 [react-konva](https://github.com/lavrton/react-konva): a JavaScript library for drawing complex canvas graphics using React.
