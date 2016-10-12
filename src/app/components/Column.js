@@ -74,11 +74,11 @@ export default class Column extends React.Component {
 
       switch (this.state.data[rowN]) {
         case EngineBoard.DISC1:
-          discColor = 'red';
+          discColor = config.discPlayer1Color;
           break;
 
         case EngineBoard.DISC2:
-          discColor = 'green';
+          discColor = config.discPlayer2Color;
           break;
 
         default:
