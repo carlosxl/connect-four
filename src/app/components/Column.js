@@ -4,7 +4,7 @@ import React from 'react';
 
 import * as config from '../config';
 import EngineBoard from '../../engine/board';
-import gameStore from '../stores/gameStore';
+import GameStore from '../stores/GameStore';
 import * as GameActions from '../actions/GameActions';
 
 export default class Column extends React.Component {
@@ -20,21 +20,21 @@ export default class Column extends React.Component {
     });
 
     this.state = {
-      data: gameStore.getColumn(props.colN),
+      data: GameStore.getColumn(props.colN),
       mouseover: false
     };
   }
 
   componentWillMount() {
-    gameStore.on('move', () => {
+    GameStore.on('move', () => {
       this.setState({
-        data: gameStore.getColumn(this.props.colN),
+        data: GameStore.getColumn(this.props.colN),
       });
     });
 
-    gameStore.on('restart', () => {
+    GameStore.on('restart', () => {
       this.setState({
-        data: gameStore.getColumn(this.props.colN),
+        data: GameStore.getColumn(this.props.colN),
       });
     });
   }
