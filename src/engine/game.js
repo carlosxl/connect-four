@@ -10,6 +10,7 @@ class Game {
     this.nextMoveDisc = Board.DISC1;
     this.totalMoves = 0;
     this.winner;
+    this.winningCells = Array();
 
     this._winCondition = winCondition;
   }
@@ -45,7 +46,7 @@ class Game {
   }
 
   isEndGame() {
-    let colN, rowN;
+    let colN, rowN, _winningCells;
 
     if (!_.isUndefined(this.winner)) {
       return true;
@@ -62,29 +63,33 @@ class Game {
 
         // check upward
         traverseIter = this.board.lineTraverse(colN, rowN, 0, 1);
-        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+        if (traverseUntilWinCondition.call(this, colN, rowN, traverseIter)) {
           this.winner = thisDisc;
+          this.winningCells = _winningCells;
           return true;
         }
 
         // check up right diagonal
         traverseIter = this.board.lineTraverse(colN, rowN, 1, 1);
-        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+        if (traverseUntilWinCondition.call(this, colN, rowN, traverseIter)) {
           this.winner = thisDisc;
+          this.winningCells = _winningCells;
           return true;
         }
 
         // check right
         traverseIter = this.board.lineTraverse(colN, rowN, 1, 0);
-        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+        if (traverseUntilWinCondition.call(this, colN, rowN, traverseIter)) {
           this.winner = thisDisc;
+          this.winningCells = _winningCells;
           return true;
         }
 
         // check down right diagonal
         traverseIter = this.board.lineTraverse(colN, rowN, 1, -1);
-        if (traverseUntilWinCondition.call(this, thisDisc, traverseIter)) {
+        if (traverseUntilWinCondition.call(this, colN, rowN, traverseIter)) {
           this.winner = thisDisc;
+          this.winningCells = _winningCells;
           return true;
         }
       }
@@ -92,23 +97,28 @@ class Game {
 
     return false;
 
-    function traverseUntilWinCondition(thisDisc, iter) {
-      let numConnected = 1;
+    function traverseUntilWinCondition(colN, rowN, iter) {
+      _winningCells = Array();
+      _winningCells.push([colN, rowN]);
+      const thisDisc = this.board.getCellDisc(colN, rowN);
 
       while (true) {
-        let { value: nextDisc, done } = iter.next();
+        const { value, done } = iter.next();
 
         if (done) {
           return false;
         }
+
+        const [nextColN, nextRowN] = value;
+        const nextDisc = this.board.getCellDisc(nextColN, nextRowN);
 
         if (this.board.isEmpty(nextDisc)) {
           break;
         }
 
         if (nextDisc === thisDisc) {
-          numConnected++;
-          if (numConnected === this._winCondition) {
+          _winningCells.push([nextColN, nextRowN]);
+          if (_winningCells.length === this._winCondition) {
             return true;
           }
         } else {

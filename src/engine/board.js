@@ -48,7 +48,7 @@ class Board {
     let nextRowN = startRowN + rowDelta;
 
     while (_.inRange(nextColN, 0, self.numCol) && _.inRange(nextRowN, 0, self.numRow)) {
-      yield self._board[nextColN][nextRowN];
+      yield [nextColN, nextRowN];
       nextColN += colDelta;
       nextRowN += rowDelta;
     }

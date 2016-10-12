@@ -18,6 +18,10 @@ class GameStore extends EventEmitter {
     return this.game.discToPlayerName(this.game.winner);
   }
 
+  getWinningCells() {
+    return this.game.winningCells;
+  }
+
   getNextMovePlayerName() {
     return this.game.discToPlayerName(this.game.nextMoveDisc);
   }

@@ -53,8 +53,10 @@ export default class Column extends React.Component {
 
   render() {
     const numRow = this.props.numRow;
+    const winningCells = this.props.winningCells;
+
     const cells = _.range(numRow).map((rowN) => {
-      let discColor;
+      let discColor, strokeColor;
 
       switch (this.props.data[rowN]) {
         case EngineBoard.DISC1:
@@ -70,6 +72,12 @@ export default class Column extends React.Component {
           break;
       }
 
+      if (_.find(winningCells, function([_colN, _rowN]) { return _rowN === rowN; })) {
+        strokeColor = 'red';
+      } else {
+        strokeColor = null;
+      }
+
       return (
         <Circle
           key={rowN}
@@ -77,6 +85,8 @@ export default class Column extends React.Component {
           y={(numRow - rowN - 1) * config.cellSideLength + config.cellSideLength / 2}
           radius={config.discRadius}
           fill={discColor}
+          stroke={strokeColor}
+          strokeWidth={5}
         />
       );
     });
