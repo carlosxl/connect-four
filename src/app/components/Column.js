@@ -4,7 +4,6 @@ import React from 'react';
 
 import * as config from '../config';
 import EngineBoard from '../../engine/board';
-import gameStore from '../stores/gameStore';
 import * as GameActions from '../actions/GameActions';
 
 export default class Column extends React.Component {
@@ -20,23 +19,8 @@ export default class Column extends React.Component {
     });
 
     this.state = {
-      data: gameStore.getColumn(props.colN),
       mouseover: false
     };
-  }
-
-  componentWillMount() {
-    gameStore.on('move', () => {
-      this.setState({
-        data: gameStore.getColumn(this.props.colN),
-      });
-    });
-
-    gameStore.on('restart', () => {
-      this.setState({
-        data: gameStore.getColumn(this.props.colN),
-      });
-    });
   }
 
   getColCanvasX() {
@@ -72,13 +56,13 @@ export default class Column extends React.Component {
     const cells = _.range(numRow).map((rowN) => {
       let discColor;
 
-      switch (this.state.data[rowN]) {
+      switch (this.props.data[rowN]) {
         case EngineBoard.DISC1:
-          discColor = 'red';
+          discColor = config.discPlayer1Color;
           break;
 
         case EngineBoard.DISC2:
-          discColor = 'green';
+          discColor = config.discPlayer2Color;
           break;
 
         default:

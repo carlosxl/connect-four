@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 
-import gameStore from '../stores/gameStore';
+import GameStore from '../stores/GameStore';
 import * as GameActions from '../actions/GameActions';
 
 export default class GamePanel extends React.Component {
@@ -9,23 +9,23 @@ export default class GamePanel extends React.Component {
     super();
 
     this.state = {
-      nextMovePlayerName: gameStore.getNextMovePlayerName(),
+      nextMovePlayerName: GameStore.getNextMovePlayerName(),
       winnerName: null
     };
   }
 
   componentWillMount() {
-    gameStore.on('endGame', () => {
-      this.setState({winnerName: gameStore.getWinnerName()});
+    GameStore.on('endGame', () => {
+      this.setState({winnerName: GameStore.getWinnerName()});
     });
 
-    gameStore.on('move', () => {
-      this.setState({nextMovePlayerName: gameStore.getNextMovePlayerName()});
+    GameStore.on('move', () => {
+      this.setState({nextMovePlayerName: GameStore.getNextMovePlayerName()});
     });
 
-    gameStore.on('restart', () => {
+    GameStore.on('restart', () => {
       this.setState({
-        nextMovePlayerName: gameStore.getNextMovePlayerName(),
+        nextMovePlayerName: GameStore.getNextMovePlayerName(),
         winnerName: null
       });
     });
